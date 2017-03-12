@@ -10,7 +10,7 @@
 // ---------------------
 //#define FASTLED_ESP8266_NODEMCU_PIN_ORDER
 #include <FastLED.h>
-#define NUM_LEDS 5
+#define NUM_LEDS 8
 #define DATA_PIN 5 // D5
 CRGB leds[NUM_LEDS];
 #define BRIGHTNESS  128
@@ -18,7 +18,7 @@ CRGB leds[NUM_LEDS];
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "xxxx";
+char auth[] = "xxx";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
