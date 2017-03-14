@@ -22,24 +22,24 @@ char auth[] = "xxx";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-//  char ssid[] = "Azionecoop";
-//  char pass[] = "azionecoop2014";
+char ssid[] = "Azionecoop";
+char pass[] = "azionecoop2014";
 
-char ssid[] = "xxx";
-char pass[] = "xxx";
+//char ssid[] = "xxx";
+//char pass[] = "xxx";
 
 void showled(int R, int G, int B) {
   //FastLED.clear();
   for (int i = 0; i < NUM_LEDS; i++) {
-    leds[i].setRGB( R, G, B);
+    leds[i].setRGB( R/4, G/4, B/4);
   }
   FastLED.show();
 }
 
 //Add a zeRGBa Widget and set it to MERGE mode. Choose Virtual Pin V1
 BLYNK_WRITE(V1) {
-  int R = param[0].asInt();
-  int G = param[1].asInt();
+  int G = param[0].asInt();
+  int R = param[1].asInt();
   int B = param[2].asInt();
 
   showled(R, G, B);
