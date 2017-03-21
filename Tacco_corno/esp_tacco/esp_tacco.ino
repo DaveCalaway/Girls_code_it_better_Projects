@@ -1,10 +1,10 @@
 /*
    Tacco corno GCIB 2017 Focherini Carpi
    The program is made for ESP8266 NodeMCU, one NeoPixel strip on pin D5.
-   The dashboard is Blynk, with On-Off -switch-,single color -button- and 
+   The dashboard is Blynk, with On-Off -switch-,single color -button- and
    zeRGBa -widget- .
    I used a level shifter for control the data to the NeoPixel.
-   
+
    Maker: Davide Gariselli
    Teacher: Elena Menozzi
 */
@@ -19,7 +19,8 @@
 CRGB leds[NUM_LEDS];
 #define BRIGHTNESS  128 // 2^8 value
 // -----------------------------------
-int colors[NUM_LEDS] = {}; // only 2^8 colors
+// if you want to use integer nuumber:  R*256*256 + G*256 + B = int
+int colors[NUM_LEDS * 3] = {249, 10, 10, 255, 102, 0, 250, 242, 14, 13, 255, 21, 13, 94, 255, 167, 13, 255, 223, 117, 249, 255, 255, 255}; // only 2^8 colors
 bool power = 0;
 // ---------------------
 
@@ -37,7 +38,9 @@ BLYNK_WRITE(V0) {
   power = param.asInt();
   if ( power == 0 ) {
     Serial.println("Power OFF");
-    FastLED.clear();
+    for (int i = 0; i < NUM_LEDS; i++)
+      leds[i].setRGB( 0, 0, 0);
+    FastLED.show();
   }
   else
     Serial.println("Power ON");
@@ -64,9 +67,8 @@ BLYNK_WRITE(V1) {
     int R = param[1].asInt();
     int B = param[2].asInt();
 
-    //FastLED.clear();
     for (int i = 0; i < NUM_LEDS; i++) {
-      leds[i].setRGB( R/4, G/4, B/4);
+      leds[i].setRGB( R / 4, G / 4, B / 4);
     }
     FastLED.show();
 
