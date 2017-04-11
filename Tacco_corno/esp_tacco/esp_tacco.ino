@@ -4,7 +4,8 @@
    The dashboard is Blynk, with On-Off -switch-,single color -button- and
    zeRGBa -widget- .
    I used a level shifter for control the data to the NeoPixel.
-
+   If you use Adafruit Feather HUZZAH you don't need the level shifter.
+   
    Maker: Davide Gariselli
    Teacher: Elena Menozzi
 */
@@ -14,13 +15,13 @@
 #include <BlynkSimpleEsp8266.h>
 // ----------- FastLed ---------------
 #include <FastLED.h>
-#define NUM_LEDS 8 // remeber, use an external power if u want to use leds>10
+#define NUM_LEDS 5 // remeber, use an external power if u want to use leds>10
 #define DATA_PIN 5 // D5
 CRGB leds[NUM_LEDS];
 #define BRIGHTNESS  128 // 2^8 value
 // -----------------------------------
 // if you want to use integer nuumber:  R*256*256 + G*256 + B = int
-int colors[NUM_LEDS * 3] = {249, 10, 10, 255, 102, 0, 250, 242, 14, 13, 255, 21, 13, 94, 255, 167, 13, 255, 223, 117, 249, 255, 255, 255}; // only 2^8 colors
+int colors[NUM_LEDS * 3] = {249, 10, 10, 255, 102, 0, 250, 242, 14, 13, 255, 21, 13, 94, 255}; // only 2^8 colors
 bool power = 0;
 // ---------------------
 
@@ -30,8 +31,8 @@ char auth[] = "xxx";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Azionecoop";
-char pass[] = "azionecoop2014";
+char ssid[] = "xxx";
+char pass[] = "xxx";
 
 // ON-OFF
 BLYNK_WRITE(V0) {
@@ -93,4 +94,3 @@ void setup() {
 void loop() {
   Blynk.run();
 }
-
