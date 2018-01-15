@@ -1,5 +1,6 @@
 /*  Pads - Girls code it better 2017/18
-    DaveCalaway
+    Board: Pro Micro - 5V/16MHz ( https://goo.gl/ktnDG2 )
+    DaveCalaway ( https://goo.gl/UdFf25 )
 */
 
 #include "Keyboard.h"
@@ -27,6 +28,7 @@ byte mouse_read = 1;
 byte button_read = 1;
 
 void setup() {
+  // initialize digital pins
   for ( byte i = 0; i < 6; i++) {
     pinMode(Button[i], INPUT_PULLUP);
   }
@@ -41,7 +43,7 @@ void setup() {
 }
 
 void loop() {
-
+  // check buttons states for move the body
   for ( byte i = 0; i < 6; i++) {
     button_read = digitalRead(Button[i]);
     if (button_read == LOW) {
@@ -50,7 +52,7 @@ void loop() {
       button_(i);
     }
   }
-
+  // check buttons states for move the eyes
   for ( byte i = 0; i < 4; i++) {
     mouse_read = digitalRead(mouse[i]);
     if (mouse_read == LOW) {
