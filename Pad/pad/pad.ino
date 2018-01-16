@@ -19,7 +19,8 @@ const int leftMouse = 9;
 const int rightMouse = 10;
 const int jumpButton = 14;
 
-const int responseDelay = 50;
+const int responseDelay = 70;
+const int mouseReaction = 20;
 
 byte Button[6] = {upButton, downButton, leftButton, rightButton, mouseLeft, jumpButton};
 byte mouse[4] = {upMouse, downMouse, leftMouse, rightMouse};
@@ -66,13 +67,13 @@ void loop() {
 
 void mouse_(byte i) {
   if (i == 0) // up
-    Mouse.move(0, -40);
+    Mouse.move(0, -(mouseReaction));
   if (i == 1) // down
-    Mouse.move(0, 40);
+    Mouse.move(0, mouseReaction);
   if (i == 2) // left
-    Mouse.move(-40, 0);
+    Mouse.move(-(mouseReaction), 0);
   if (i == 3) // right
-    Mouse.move(40, 0);
+    Mouse.move(mouseReaction, 0);
 }
 
 void button_(byte i) {
