@@ -49,8 +49,9 @@ void loop() {
     button_read = digitalRead(Button[i]);
     if (button_read == LOW) {
       Serial.println("ok");
-      delay(responseDelay);
       button_(i);
+      delay(responseDelay);
+      Keyboard.releaseAll();
     }
   }
   // check buttons states for move the eyes
@@ -78,16 +79,17 @@ void mouse_(byte i) {
 
 void button_(byte i) {
   if (i == 0) // up
-    Keyboard.write('w');
+    //Keyboard.write('w');
+    Keyboard.press('w');
   if (i == 1) // down
-    Keyboard.write('s');
+    Keyboard.press('s');
   if (i == 2) // left
-    Keyboard.write('a');
+    Keyboard.press('a');
   if (i == 3) // right
-    Keyboard.write('d');
+    Keyboard.press('d');
   if (i == 4) // mouseLeft
     Mouse.click(MOUSE_LEFT);
   if (i == 5) // jumpButton
-    Keyboard.write(' ');
+    Keyboard.press(' ');
 }
 
