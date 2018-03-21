@@ -34,7 +34,6 @@ const int STRIP2_PIN = 10;
 int delay_strip2 = 500;
 CRGB strip2[NUM_LEDS_STRIP2];
 
-
 const int responseDelay = 70;
 const int mouseReaction = 20;
 
@@ -53,7 +52,7 @@ void setup() {
     pinMode(mouse[i], INPUT_PULLUP);
   }
 
-  Serial.begin(9600);
+  //Serial.begin(9600);
   // initialize mouse control:
   Mouse.begin();
   Keyboard.begin();
@@ -62,28 +61,17 @@ void setup() {
 }
 
 void loop() {
-  // move the leds strips!
-  strip();
-  // check buttons states for move the body
-  for ( byte i = 0; i < 6; i++) {
-    button_read = digitalRead(Button[i]);
-    if (button_read == LOW) {
-      Serial.println("ok");
-      button_(i);
-      delay(responseDelay);
-      Keyboard.releaseAll();
-    }
-  }
-  // check buttons states for move the eyes
-  for ( byte i = 0; i < 4; i++) {
-    mouse_read = digitalRead(mouse[i]);
-    if (mouse_read == LOW) {
-      //Serial.println("ok");
-      delay(responseDelay);
-      mouse_(i);
-    }
-  }
+  // strip function
+  for (int dot = 0; dot < NUM_LEDS_STRIP1; dot++) {
+    strip1[dot] = CRGB::Blue;
+    FastLED.show();
 
+    button_check();
+
+    delay(30);
+    // clear this led for the next time around the loop
+    strip1[dot] = CRGB::Black;
+  }
 }
 
 void mouse_(byte i) {
@@ -113,13 +101,22 @@ void button_(byte i) {
     Keyboard.press(' ');
 }
 
-// strip function
-void strip() {
-  for (int dot = 0; dot < NUM_LEDS_STRIP1; dot++) {
-    strip1[dot] = CRGB::Blue;
-    FastLED.show();
-    // clear this led for the next time around the loop
-    strip1[dot] = CRGB::Black;
-    delay(30);
+void button_check() {
+  for ( byte i = 0; i < 6; i++) {
+    // check buttons states for move the body
+    button_read = digitalRead(Button[i]);
+    // check buttons states for move the eyes
+    mouse_read = digitalRead(mouse[i]);
+    if (button_read == LOW) {
+      //Serial.println("ok");
+      button_(i);
+      delay(responseDelay);
+      Keyboard.releaseAll();
+    }
+    if (mouse_read == LOW && i < 4) {
+      //Serial.println("ok");
+      delay(responseDelay);
+      mouse_(i);
+    }
   }
 }
