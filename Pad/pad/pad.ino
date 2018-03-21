@@ -1,23 +1,39 @@
 /*  Pads - Girls code it better 2017/18
+    Make a big pad for every pc game! Plus use 2 neopixel strips for play with light!
     Board: Pro Micro - 5V/16MHz ( https://goo.gl/ktnDG2 )
     DaveCalaway ( https://goo.gl/UdFf25 )
 */
 
-#include "Keyboard.h"
-#include "Mouse.h"
+#include <FastLED.h> // https://github.com/FastLED/FastLED/wiki/Basic-usage
+#include <Keyboard.h>
+#include <Mouse.h>
 
-// buttons
-const int upButton = 2;
-const int downButton = 3;
-const int leftButton = 4;
-const int rightButton = 5;
-// mouse
-const int mouseLeft = 6;
+// buttons for move feet
+const int upButton = 2; // W
+const int downButton = 3; // S
+const int leftButton = 4; // A
+const int rightButton = 5; // D
+const int jumpButton = 14; // JUMP
+
+// mouse for head
 const int upMouse = 7;
 const int downMouse = 8;
-const int leftMouse = 9;
-const int rightMouse = 10;
-const int jumpButton = 14;
+const int leftMouse = 16;
+const int rightMouse = 6;
+const int mouseLeft = 15; // click left mouse
+
+
+// neopixels
+const int STRIP1_PIN = 9;
+#define NUM_LEDS_STRIP1      16
+int delay_strip1 = 500;
+CRGB strip1[NUM_LEDS_STRIP1];
+
+const int STRIP2_PIN = 10;
+#define NUM_LEDS_STRIP2      16
+int delay_strip2 = 500;
+CRGB strip2[NUM_LEDS_STRIP2];
+
 
 const int responseDelay = 70;
 const int mouseReaction = 20;
@@ -41,9 +57,13 @@ void setup() {
   // initialize mouse control:
   Mouse.begin();
   Keyboard.begin();
+  FastLED.addLeds<NEOPIXEL, STRIP1_PIN>(strip1, NUM_LEDS_STRIP1);
+  FastLED.addLeds<NEOPIXEL, STRIP2_PIN>(strip2, NUM_LEDS_STRIP2);
 }
 
 void loop() {
+  // move the leds strips!
+  strip();
   // check buttons states for move the body
   for ( byte i = 0; i < 6; i++) {
     button_read = digitalRead(Button[i]);
@@ -93,3 +113,13 @@ void button_(byte i) {
     Keyboard.press(' ');
 }
 
+// strip function
+void strip() {
+  for (int dot = 0; dot < NUM_LEDS_STRIP1; dot++) {
+    strip1[dot] = CRGB::Blue;
+    FastLED.show();
+    // clear this led for the next time around the loop
+    strip1[dot] = CRGB::Black;
+    delay(30);
+  }
+}
