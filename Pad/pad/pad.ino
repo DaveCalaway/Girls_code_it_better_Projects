@@ -23,15 +23,14 @@ const int rightMouse = 6;
 const int mouseLeft = 15; // click left mouse
 
 
-// neopixels
+// neopixels edge strip
 const int STRIP1_PIN = 9;
-#define NUM_LEDS_STRIP1      16
-int delay_strip1 = 500;
+#define NUM_LEDS_STRIP1      40
 CRGB strip1[NUM_LEDS_STRIP1];
 
+// neopixels top strip
 const int STRIP2_PIN = 10;
-#define NUM_LEDS_STRIP2      16
-int delay_strip2 = 500;
+#define NUM_LEDS_STRIP2      6
 CRGB strip2[NUM_LEDS_STRIP2];
 
 const int responseDelay = 70;
@@ -42,6 +41,7 @@ byte mouse[4] = {upMouse, downMouse, leftMouse, rightMouse};
 
 byte mouse_read = 1;
 byte button_read = 1;
+int delay_strip = 50;
 
 void setup() {
   // initialize digital pins
@@ -58,19 +58,22 @@ void setup() {
   Keyboard.begin();
   FastLED.addLeds<NEOPIXEL, STRIP1_PIN>(strip1, NUM_LEDS_STRIP1);
   FastLED.addLeds<NEOPIXEL, STRIP2_PIN>(strip2, NUM_LEDS_STRIP2);
+  FastLED.setBrightness(50);
 }
 
 void loop() {
   // strip function
   for (int dot = 0; dot < NUM_LEDS_STRIP1; dot++) {
     strip1[dot] = CRGB::Blue;
+    strip2[dot] = CRGB::Blue;
     FastLED.show();
 
     button_check();
 
-    delay(30);
+    delay(delay_strip);
     // clear this led for the next time around the loop
     strip1[dot] = CRGB::Black;
+    strip2[dot] = CRGB::Black;
   }
 }
 
@@ -96,7 +99,7 @@ void button_(byte i) {
   if (i == 3) // right
     Keyboard.press('d');
   if (i == 4) // mouseLeft
-    Mouse.click(MOUSE_LEFT);
+    Mouse.click(MOUSE_RIGHT);
   if (i == 5) // jumpButton
     Keyboard.press(' ');
 }
